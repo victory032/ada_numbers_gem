@@ -41,10 +41,14 @@ module AdaNumbers
         THOUSAND_MILLION, BILLION, TRILLION
       ]
 
+      def self.numbers_that_ignore_separator; @@numbers_that_ignore_separator; end
+
       @@unities_that_combine_with_separator = [
         TWENTY, THIRTY, FORTY, FIFTY,
         SIXTY, SEVENTY, EIGHTY, NINETY
       ]
+
+      def self.unities_that_combine_with_separator; @@unities_that_combine_with_separator; end
 
       @@words_to_number_map = {
         ZERO     => 0,  ONE     => 1,  TWO       => 2,  THREE    => 3,   FOUR     => 4,
@@ -56,6 +60,8 @@ module AdaNumbers
         MILLION  => 1e6.to_i
       }
 
+      def self.words_to_number_map; @@words_to_number_map; end
+
       @@words_to_number_unities_and_tens_map = {
         ZERO     => 0,  ONE     => 1,  TWO       => 2,  THREE    => 3,   FOUR     => 4,
         FIVE     => 5,  SIX     => 6,  SEVEN     => 7,  EIGHT    => 8,   NINE     => 9,
@@ -65,24 +71,34 @@ module AdaNumbers
         SEVENTY  => 70, EIGHTY  => 80, NINETY    => 90
       }
 
+      def self.words_to_number_unities_and_tens_map; @@words_to_number_unities_and_tens_map; end
+
       @@words_to_number_map_long_scale = {
         THOUSAND_MILLION => 1e9.to_i,
         BILLION          => 1e12.to_i
       }
+
+      def self.words_to_number_map_long_scale; @@words_to_number_map_long_scale; end
 
       @@words_to_number_map_short_scale = {
         BILLION  => 1e9.to_i,
         TRILLION => 1e12.to_i
       }
 
+      def self.words_to_number_map_short_scale; @@words_to_number_map_short_scale; end
+
       @@not_to_combine_with_thousand = [
         MILLION, BILLION, TRILLION
       ]
+
+      def self.not_to_combine_with_thousand; @@not_to_combine_with_thousand; end
 
       @@numbers_to_words_map_unities = {
         0 => ZERO, 1 => ONE, 2 => TWO  , 3 => THREE, 4 => FOUR,
         5 => FIVE, 6 => SIX, 7 => SEVEN, 8 => EIGHT, 9 => NINE
       }
+
+      def self.numbers_to_words_map_unities; @@numbers_to_words_map_unities; end
 
       @@numbers_to_words_map_tens = {
         10 => TEN    , 11 => ELEVEN , 12 => TWELVE   , 13 => THIRTEEN, 14 => FOURTEEN,
@@ -90,6 +106,8 @@ module AdaNumbers
         20 => TWENTY , 30 => THIRTY , 40 => FORTY    , 50 => FIFTY   , 60 => SIXTY   ,
         70 => SEVENTY, 80 => EIGHTY , 90 => NINETY
       }
+
+      def self.numbers_to_words_map_tens; @@numbers_to_words_map_tens; end
     end
   end
 end
