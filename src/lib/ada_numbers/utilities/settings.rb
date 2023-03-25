@@ -4,13 +4,13 @@ module AdaNumbers
   class Settings
     class Parameters
       LANGUAGES = {
-        en: "English",
-        pt: "Portuguese"
+        en: :english,
+        pt: :portuguese
       }
 
       SCALES = {
-        short: "Short",
-        long:   "Long"
+        short: :short,
+        long:  :long
       }
 
       @hello = "hi"
@@ -19,6 +19,16 @@ module AdaNumbers
       end
     end
 
-    Parameters.hello = 2
+    @language = Parameters::LANGUAGES[:en]
+    @scale    = Parameters::SCALES[:long]
+
+    class << self
+      attr_accessor :language, :scale
+
+      def reset
+        @language = Parameters::LANGUAGES[:en]
+        @scale    = Parameters::SCALES[:short]
+      end
+    end
   end
 end
