@@ -70,7 +70,7 @@ module AdaNumbers
         BILLION          => 1e12.to_i
       }
 
-      @@words_to_number_map_shor_scale = {
+      @@words_to_number_map_short_scale = {
         BILLION  => 1e9.to_i,
         TRILLION => 1e12.to_i
       }
