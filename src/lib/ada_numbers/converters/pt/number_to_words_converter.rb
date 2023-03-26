@@ -18,7 +18,7 @@ module AdaNumbers
         return Message::UNSUPPORTED if number.number_of_digits > LIMIT
 
         select_scale
-        @@number_tokens = []
+        @@number_tokens.clear
         return resolve_number number
       end
 
@@ -35,7 +35,7 @@ module AdaNumbers
         whole_part   = str_integer_part.to_i
         decimal_part = str_decimal_part.to_i
 
-        @@number_tokens = []
+        @@number_tokens.clear
         result = resolve_number whole_part
 
         return result if decimal_part == 0
@@ -59,6 +59,44 @@ module AdaNumbers
       end
 
       def self.resolve_number(number, flag = false)
+        result = ''
+        number_category = number.category
+
+        case number_category
+        when NumberCategory::UNITY
+          result = unities number
+        when NumberCategory::TEN
+          result = tens number
+        when NumberCategory::HUNDRED
+          result = hundreds number
+        when NumberCategory::THOUSAND
+          result = thousands number
+        when NumberCategory::MILLION
+          result = millions number
+        when NumberCategory::THOUSAND_MILLIONS
+          result = thousand_millions number
+        when NumberCategory::BILLION
+          result = billions number
+        end
+
+        if result.empty?
+          str_number = number.to_s
+          bridge = number.bridge
+
+          flag_first_digits = (number_category == NumberCategory::HUNDRED ? number != 100 : false)
+
+          first_digits = (str_number[0...bridge] + '0'*number_category).to_i
+          other_digits = (str_number[bridge...-1]).to_i
+
+          flag_other_digits = other_digits != 100
+
+          resolve_number first_digits, flag_first_digits
+          resolve_number other_digits, flag_other_digits
+        else
+          @@number_tokens << result
+        end
+
+        add_separators_to_number @@number_tokens
       end
 
       def add_separators_to_number(number_tokens)
@@ -131,7 +169,6 @@ module AdaNumbers
         resolve_number partial_number
         return plural
       end
-
     end
   end
 end
