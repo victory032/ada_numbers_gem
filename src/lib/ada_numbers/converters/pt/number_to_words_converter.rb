@@ -101,6 +101,28 @@ module AdaNumbers
         return results.resolve number
       end
 
+      def thousands(number)
+        evaluate_thousands_and_over number, 1e3.to_i, WrittenNumber::Pt::THOUSAND, WrittenNumber::Pt::THOUSAND
+      end
+
+      def millions(number)
+        evaluate_thousands_and_over number, 1e6.to_i, WrittenNumber::Pt::MILLION_SINGULAR, WrittenNumber::Pt::MILLION_PLURAL
+      end
+
+      def thousand_millions(number)
+        singular = (@@use_short_scale ? WrittenNumber::Pt::BILLION_SINGULAR : WrittenNumber::Pt::THOUSAND_MILLION)
+        plural   = (@@use_short_scale ? WrittenNumber::Pt::BILLION_PLURAL : WrittenNumber::Pt::THOUSAND_MILLION)
+
+        evaluate_thousands_and_over number, 1e9.to_i, singular, plural
+      end
+
+      def billions(number)
+        singular = (@@use_short_scale ? WrittenNumber::Pt::TRILLION_SINGULAR : WrittenNumber::Pt::BILLION_SINGULAR)
+        plural   = (@@use_short_scale ? WrittenNumber::Pt::TRILLION_PLURAL : WrittenNumber::Pt::BILLION_PLURAL)
+
+        evaluate_thousands_and_over number, 1e12.to_i, singular, plural
+      end
+
       def evaluate_thousands_and_over(number, category_identifier, singular, plural)
         return singular if number == category_identifier
         return '' if number%category_identifier != 0
