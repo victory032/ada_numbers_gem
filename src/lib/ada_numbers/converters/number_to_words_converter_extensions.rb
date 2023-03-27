@@ -1,4 +1,5 @@
 require_relative './pt/number_to_words_converter'
+require_relative './en/number_to_words_converter'
 
 class Float
   def to_words

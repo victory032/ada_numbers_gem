@@ -92,7 +92,7 @@ module AdaNumbers
           flag_first_digits = (number_category == NumberCategory::HUNDRED ? number != 100 : false)
 
           first_digits = (str_number[0...bridge] + '0'*number_category).to_i
-          other_digits = (str_number[bridge...-1]).to_i
+          other_digits = (str_number[bridge..-1]).to_i
 
           flag_other_digits = other_digits != 100
 
