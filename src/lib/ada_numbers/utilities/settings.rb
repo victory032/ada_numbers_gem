@@ -27,7 +27,7 @@ module AdaNumbers
 
       def reset
         @language = Parameters::LANGUAGES[:en]
-        @scale    = Parameters::SCALES[:short]
+        @scale    = Parameters::SCALES[:long]
       end
     end
   end

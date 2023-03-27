@@ -50,12 +50,13 @@ module AdaNumbers
         result += " #{Separator::Pt::DECIMAL_SEPARATOR.downcase} "
         # just aggregating the zeros
         result += str_decimal_part.split('').
-          select  { |c| c == "0"}.
+          take_while { |c| c == "0"}.
           collect { |c| WrittenNumber::Pt::ZERO}.
           join ' '
 
         @@number_tokens.clear
-        result += " #{resolve_number(decimal_part)}"
+        result += result[-1] == ' '? resolve_number(decimal_part) :
+                    " #{resolve_number(decimal_part)}"
 
         return result
       end
