@@ -1,5 +1,11 @@
 require_relative '../../utilities/integer_extensions'
 require_relative '../../utilities/hash_extensions'
+require_relative '../../utilities/settings'
+require_relative '../../utilities/number_category'
+
+require_relative '../../constants/pt/written_numbers'
+require_relative '../../constants/pt/separators'
+
 
 module AdaNumbers
   module NumberToWordsConverter
@@ -14,6 +20,7 @@ module AdaNumbers
         return convert_float(number)
       end
 
+      private
       def self.convert_integer(number)
         return Message::UNSUPPORTED if number.number_of_digits > LIMIT
 
@@ -53,7 +60,6 @@ module AdaNumbers
         return result
       end
 
-      private
       def self.select_scale
         @@use_short_scale = Settings.scale == Settings::Parameters::SCALES[:short]
       end
@@ -99,7 +105,7 @@ module AdaNumbers
         add_separators_to_number @@number_tokens
       end
 
-      def add_separators_to_number(number_tokens)
+      def self.add_separators_to_number(number_tokens)
         result = number_tokens.first
 
         (1...number_tokens.size).each do |cursor|
@@ -115,15 +121,15 @@ module AdaNumbers
         return result
       end
 
-      def unities(number)
+      def self.unities(number)
         WrittenNumber::Pt.numbers_to_words_map_unities.resolve number
       end
 
-      def tens(number)
+      def self.tens(number)
         WrittenNumber::Pt.numbers_to_words_map_tens.resolve number
       end
 
-      def hundreds(number, is_cent = false)
+      def self.hundreds(number, is_cent = false)
         results = {
           200 => WrittenNumber::Pt::TWO_HUNDRED,
           300 => WrittenNumber::Pt::THREE_HUNDRED,
@@ -139,29 +145,29 @@ module AdaNumbers
         return results.resolve number
       end
 
-      def thousands(number)
+      def self.thousands(number)
         evaluate_thousands_and_over number, 1e3.to_i, WrittenNumber::Pt::THOUSAND, WrittenNumber::Pt::THOUSAND
       end
 
-      def millions(number)
+      def self.millions(number)
         evaluate_thousands_and_over number, 1e6.to_i, WrittenNumber::Pt::MILLION_SINGULAR, WrittenNumber::Pt::MILLION_PLURAL
       end
 
-      def thousand_millions(number)
+      def self.thousand_millions(number)
         singular = (@@use_short_scale ? WrittenNumber::Pt::BILLION_SINGULAR : WrittenNumber::Pt::THOUSAND_MILLION)
         plural   = (@@use_short_scale ? WrittenNumber::Pt::BILLION_PLURAL : WrittenNumber::Pt::THOUSAND_MILLION)
 
         evaluate_thousands_and_over number, 1e9.to_i, singular, plural
       end
 
-      def billions(number)
+      def self.billions(number)
         singular = (@@use_short_scale ? WrittenNumber::Pt::TRILLION_SINGULAR : WrittenNumber::Pt::BILLION_SINGULAR)
         plural   = (@@use_short_scale ? WrittenNumber::Pt::TRILLION_PLURAL : WrittenNumber::Pt::BILLION_PLURAL)
 
         evaluate_thousands_and_over number, 1e12.to_i, singular, plural
       end
 
-      def evaluate_thousands_and_over(number, category_identifier, singular, plural)
+      def self.evaluate_thousands_and_over(number, category_identifier, singular, plural)
         return singular if number == category_identifier
         return '' if number%category_identifier != 0
 
