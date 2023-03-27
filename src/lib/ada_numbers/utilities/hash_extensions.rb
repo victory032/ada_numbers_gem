@@ -6,12 +6,10 @@ class Hash
 
   private
   def resolve_for_int_str(number)
-    self[number]
+    (self[number].nil?)? '' : self[number]
   end
 
   def resolve_for_str_int(words)
-    result = self[words]
-    return '' if result.nil?
-    result
+    self[words]
   end
 end
