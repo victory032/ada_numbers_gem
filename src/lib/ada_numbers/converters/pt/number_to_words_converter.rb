@@ -74,7 +74,7 @@ module AdaNumbers
         when NumberCategory::TEN
           result = tens number
         when NumberCategory::HUNDRED
-          result = hundreds number
+          result = hundreds number, flag
         when NumberCategory::THOUSAND
           result = thousands number
         when NumberCategory::MILLION
